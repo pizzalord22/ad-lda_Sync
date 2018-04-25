@@ -1,0 +1,29 @@
+master-ip: 127.0.0.1
+master-principal: CN=admin cn, OU=Users,DC=company,DC=COM
+master-password: password
+master-port: 389
+master-attributes: cn, displayName, mail, lockoutTime, sAMAccountName, whenChanged, department, company, userPrincipalName, sn, givenName, logon,
+master-dc: OU=example ou,OU=Users,DC=company,DC=COM
+master-filter: (&(objectClass=organizationalPerson))
+
+slave-ip: 127.0.0.1
+slave-principal:  cn=admincn,dc=company,dc=com
+slave-password: password
+slave-port: 389
+slave-attributes: entryDN, sn, objectClass, uid, userPassword, mail, displayName, o, physicalDeliveryOfficeName, facsimileTelephoneNumber, givenName, memberOf
+slave-dc: ou=slavedc,ou=Users,dc=company,dc=com
+slave-filter: (&(objectClass=organizationalPerson))
+
+default-group: cn=group cn ,ou=Groups,dc=company,dc=com
+
+groups:
+  - cn=group cn,ou=Groups,dc=company,dc=com
+
+logfile: SyncLogs.log
+
+debugMain: True
+debugCompare: True
+debugModify: True
+debugDelete: True
+debugInitial: True
+debugAdd: True
