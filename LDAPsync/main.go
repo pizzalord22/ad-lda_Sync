@@ -1,9 +1,5 @@
 package main
 
-/*
- * IF sAMMAccountName matches Uid it is always the correct account
- */
-
 import (
 	"fmt"
 	"github.com/spf13/viper"
