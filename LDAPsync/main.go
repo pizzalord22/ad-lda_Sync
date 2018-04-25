@@ -10,31 +10,16 @@ import (
 	"github.com/fsnotify/fsnotify"
 	. "./LDAPMethods"
 	"time"
-	"os"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"log"
 )
 
 func main() {
 	log.Printf("LDAPSync is starting\r\n")
-	var masterSettings string
-	var slaveSettings string
 	initializeViper()
-	// logging init
 	fmt.Println("logfile:", viper.GetString("logfile"))
-
-	DebugMain("LDAPSync is starting", nil, 26)
-	if len(os.Args) == 3 {
-		masterSettings = os.Args[1]
-		slaveSettings = os.Args[2]
-		DebugMain(fmt.Sprintf("Set the master setting name to %s and the slave setting name to %s", masterSettings, slaveSettings), nil, 30)
-	} else {
-		fmt.Println("There was an error that caused the program to exit, check the logs for more information")
-		DebugMain(fmt.Sprintf("program got: %d argument(s) want 2", len(os.Args)-1), nil, 33)
-		return
-	}
-	Master.Initialize(masterSettings)
-	Slave.Initialize(slaveSettings)
+	Master.Initialize("master")
+	Slave.Initialize("slave")
 	CNGroups.Initialize()
 	cycle := 0
 	for {
@@ -74,7 +59,7 @@ func initializeViper() {
 	viper.AddConfigPath("/etc/appname/")  // path to look for the config.yaml file in
 	viper.AddConfigPath("$HOME/.appname") // call multiple times to add many searchLDAP paths
 	viper.AddConfigPath(".")              // optionally look for config.yaml in the working directory
-	err := viper.ReadInConfig() // Find and read the config.yaml file
+	err := viper.ReadInConfig()           // Find and read the config.yaml file
 	if err != nil {
 		DebugMain(fmt.Sprintf("There was a problem with the config file"), err, 79)
 		return
